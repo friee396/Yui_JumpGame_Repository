@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
   public float JumpPower = 5f;
 
   private Rigidbody2D rb;
+  private bool isGrounded;
 
 
   /*
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     float x = 0f;
 
-    // ←→ or AD を押すと左右移動
+    // ←→ or AD を押している間左右移動
     if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
       {
       x = -1f;
@@ -42,11 +43,21 @@ public class PlayerController : MonoBehaviour
     // 速度＝(左右方向の移動速度, ｙ方向のベクトル)
     rb.velocity = new Vector2(x * MoveSpeed, rb.velocity.y);
 
-    // スペースキーを押すとジャンプ
-    if (Input.GetKey(KeyCode.Space))
+    // 地面にいるときスペースキーを押した瞬間ジャンプ
+    if (Input.GetKey(KeyCode.Space) && isGrounded)
       {
       rb.velocity = new Vector2(rb.velocity.x, JumpPower);
+      isGrounded = false;
       }
 
+    }
+
+  // 地面 or 足場で着地判定
+  private void OnCollisionEnter2D(Collision2D collision)
+    {
+    if (collision.gameObject.CompareTag("Ground")||collision.gameObject.CompareTag("Platform"))
+      {
+      isGrounded = true;
+      }
     }
   }
