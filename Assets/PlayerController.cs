@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -57,7 +58,13 @@ public class PlayerController : MonoBehaviour
     {
     if (collision.gameObject.CompareTag("Ground")||collision.gameObject.CompareTag("Platform"))
       {
-      isGrounded = true;
+      foreach(ContactPoint2D contact in collision.contacts)
+      if (contact.normal.y > 0.5f)
+        {
+        isGrounded = true;
+        }
       }
     }
+
+  private void starter() { }
   }
