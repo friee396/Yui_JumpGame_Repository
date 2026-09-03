@@ -8,7 +8,7 @@ void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
     if (collision.CompareTag("Player"))
       {
-      Debug.Log("Goal!");
+      Debug.Log("ÉNÉäÉA!");
       }
     }
 }
